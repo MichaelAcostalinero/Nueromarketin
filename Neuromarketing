@@ -1,0 +1,50 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+# Creating the environment
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tosr)
+library(bibliometrix)
+library(lubridate)
+library(igraph)
+library(tidytext)
+library(wordcloud)
+library(rebus)
+library(ggrepel) # improve donut visualization
+library(ggraph)
+library(visNetwork) 
+library(tidygraph)
+```
+
+This template is based in this paper
+
+https://revistas.ucm.es/index.php/REVE/article/view/75566/4564456557467
+
+For a detail explanation of how to use it, please watch this video 
+
+https://www.youtube.com/watch?v=jtKSifvNvTM
+
+# Data getting
+
+```{r}
+wos_scopus_tos <- 
+  tosr::tosr_load("scopus.bib", 
+                  "savedrecs.txt")
+
+tree_of_science <- 
+  tosr::tosR("scopus.bib", 
+             "savedrecs.txt")
+
+wos <- 
+  bibliometrix::convert2df(c("savedrecs.txt"))  # create dataframe from wos file
+
+scopus <- 
+  bibliometrix::convert2df("scopus.bib", # Create dataframe from scopus file
+                           dbsource = "scopus", 
+                           format = "bibtex")
